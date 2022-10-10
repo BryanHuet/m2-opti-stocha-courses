@@ -1,0 +1,42 @@
+Implémentation du Wumpus
+
+
+Récupérez le fichier source a l'adresse suivante : wumpus.tar.gz
+Ce fichier contient une implémentation (partielle), écrite en JAVA, du jeu de wumpus. On se déplace avec les flèches, les points bleus représentent une brise et les points rouge des taches de sang. Un gros cercle bleu représente un trou et un gros cercle rouge représente le Wumpus (on a donc perdu si l'on révèle un de ces deux symboles). Enfin, les chiffres écrits dans les cases représentent la probabilité qu'un trou se situe sur la case en question. La classe Agent.java contient entre autres une méthode computeProba à laquelle nous allons nous intéresser : celle-ci a pour rôle de mettre à jour la probabilité de présence d'un trou sur une case.
+
+Question 1 :
+
+Une case que l'on a exploré ne peut pas contenir de trou (sinon, on est tombé dans le trou et on a perdu, donc on ignore ce cas). De plus, si une case explorée ne contient pas de brise, aucune case voisine de celle-ci ne pourra contenir de trou. Modifier la méthode computeProba pour mettre à zéro les probabilité des cases pour lesquelles on est certain qu'il n'y aura pas de trou.
+
+Remarque: pour les autres cases, on laissera une probabilité égale à World.PROBA_PIT (ici: 0,2) qui est la probabilité qu'une case dont on ne sait rien contienne un trou (probabilité utilisée lors de la génération de la carte en début de partie).
+
+Question 2 :
+
+On a implémenté la mise à jour des probabilités pour les cases dont on est certain qu'elles ne contiennent pas de trou. On peut également mettre à jour les cases de la bordure, mais on ne connaît rien sur les cases restantes (cf. cours magistral). La prochaine étape est donc de déterminer quelles cases appartiennent à la bordure.
+
+Créer une structure de données pour stocker des cases (couple x,y). Modifier la méthode computeProba afin de calculer la liste des cases de la bordure. Une case appartient à la bordure si :
+
+    * elle est voisine d'une case explorée qui contient une brise,
+    * elle n'est voisine d'aucune case explorée sans brise.
+
+
+Question 3 :
+
+On va maintenant tenter d'appliquer la formule vue en TD, sur les cases de la bordure. Pour cela, on doit être capable de générer l'ensemble des instanciations possibles de la bordure (cf. TD).
+
+Construire une structure de données qui permette de stocker une instanciation de la bordure (c'est à dire d'associer ou non un trou à chaque case de la bordure) ainsi que la probabilité de cette instanciation. Écrire une méthode qui, pour une case i donnée, génère l'ensemble des instanciations de la bordure (pour le cas ou i contient un trou ainsi que le cas ou i ne contient pas de trou) et calcule la probabilité de ces instanciations.
+
+Question 4 :
+
+On va maintenant appliquer la formule. Modifier la méthode computeProba, pour chaque case i de la bordure:
+
+    * générer les instanciations de la bordure associées à i et les probabilités de celles-ci,
+    * appliquer la formule vue en TD : on calcule alpha.<proba_trou;proba_sansTrou>,
+    * calculer le facteur alpha,
+    * mettre à jour la probabilité que i contienne un trou.
+
+
+Correction :
+
+Le code corrigé est disponible ici : wumpus_correction.tar.gz
+Vous trouverez dans cet archive la classe Agent complétée. Pour faciliter la compréhension, je vous conseille de commencer par regarder la méthode computeProba et seulement ensuite les méthodes annexes qui ont été ajoutées.
